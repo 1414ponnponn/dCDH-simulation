@@ -1,0 +1,2 @@
+"0","did_3 <- did_multiplegt(df = data, Y = ""y3"", G = ""id"", T = ""year"", D = ""isTreated"", dynamic = 19, placebo = 5)"
+"0","did_4 <- did_multiplegt(df = data, Y = ""y4"", G = ""id"", T = ""year"", D = ""isTreated"", dynamic = 19, placebo = 5)"

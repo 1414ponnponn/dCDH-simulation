@@ -1,0 +1,56 @@
+library(dplyr)
+library(tidyverse)
+library(patchwork)
+library(fixest)
+library(DIDmultiplegt)
+source("code/gen_data.R")
+
+set.seed(1414)
+
+n_simu <- 500
+n_obs <- 1000
+total_years <- 36
+
+list_att1_twfe <- c()
+list_att2_twfe <- c()
+list_att3_twfe <- c()
+list_att4_twfe <- c()
+
+for(i in 1:n_simu){
+  print(i)
+  data <- make_simulation(n_obs, total_years)
+  
+  model1_twfe <- data |> 
+    mutate(timeToTreatment = year - trTime) |>
+    feols(
+      y1 ~ i(timeToTreatment, ref = -1) |
+        id + year, 
+      data = _
+    )
+  model2_twfe <- data |> 
+    mutate(timeToTreatment = year - trTime) |>
+    feols(
+      y2 ~ i(timeToTreatment, ref = -1) |
+        id + year, 
+      data = _
+    )
+  model3_twfe <- data |> 
+    mutate(timeToTreatment = year - trTime) |>
+    feols(
+      y3 ~ i(timeToTreatment, ref = -1) |
+        id + year, 
+      data = _
+    )
+  model4_twfe <- data |> 
+    mutate(timeToTreatment = year - trTime) |>
+    feols(
+      y4 ~ i(timeToTreatment, ref = -1) |
+        id + year, 
+      data = _
+    )
+  
+  list_att1_twfe <- c(list_att1_twfe, model1_twfe$coefficients[[27]])
+  list_att2_twfe <- c(list_att2_twfe, model2_twfe$coefficients[[27]])
+  list_att3_twfe <- c(list_att3_twfe, model3_twfe$coefficients[[27]])
+  list_att4_twfe <- c(list_att4_twfe, model4_twfe$coefficients[[27]])
+}

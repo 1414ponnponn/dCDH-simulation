@@ -1,0 +1,5 @@
+"0","library(patchwork)
+"
+"2","Error in library(patchwork) : 
+   ‘patchwork’ という名前のパッケージはありません 
+"
